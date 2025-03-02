@@ -10,7 +10,7 @@ import numpy as np
 from sklearn.preprocessing import QuantileTransformer
 #==================================================================================
 
-# LOAD FILE WITH MANDELSTAM INVARIANTS AS PREDICTORS ==============================
+# LOAD .txt FILE WITH MANDELSTAM INVARIANTS AS PREDICTORS =========================
 # MAKE SURE :
 # COLUMN 1 = s12, COLUMN 2 = s23
 # COLUMN 3 = s34, COLUMN 4 = s45
