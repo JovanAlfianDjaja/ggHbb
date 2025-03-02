@@ -16,15 +16,15 @@ from sklearn.preprocessing import QuantileTransformer
 # COLUMN 3 = s34, COLUMN 4 = s45
 # COLUMN 5 = s15, COLUMN 6 = s5
 
-# FILE DIRECTORY (file_path = [directory of file])
-file_path = "C:/Users/jovan/Downloads/Predict/test.txt"
+# .txt FILE DIRECTORY TO LOAD DATA POINTS TO BE PREDICTED 
+# file_path = directory of .txt file
+file_path = ...
 
 # LOAD DATA
 data = np.loadtxt(file_path)
 #==================================================================================
 
 # DATA PREPROCESSING ==============================================================
-
 # NUMBER OF FEATURES
 num_features = data.shape[1]
 
@@ -38,24 +38,23 @@ x_tr = pt.fit_transform(x)  # TRANSFORMED DATA
 #==================================================================================
 
 # PREDICTION PROCESS ==============================================================
-
-# LOAD MODEL
-model = keras.models.load_model('C:/Users/jovan/Downloads/Predict/model.keras')
+# LOAD MODEL (LOAD model.keras FILE FROM DIRECTORY OF CHOICE)
+model = keras.models.load_model('.../model.keras')
 
 # AMPLITUDE PREDICTION
-y = model.predict(x)[:,0]
+y = model.predict(x_tr)[:,0]  # PREDICT USING TRANSFORMED INVARIANTS
 #==================================================================================
 
-# RESULT ============================================================================
-result = pd.DataFrame(x)
+# RESULT ================================================================================
+result = pd.DataFrame(x)  # ORIGINAL DATA TO BE RECORDED IN RESULT, NOT TRANSFORMED DATA
 
-result.columns = ['s12', 's23', 's34', 's45', 's15', 's5']
+result.columns = ['s12', 's23', 's34', 's45', 's15', 's5']  # COLUMNS
 
-result['Predicted Amplitude'] = y
+result['Predicted Amplitude'] = y                           # AMPLITUDE COLUMN
 
 # RESULT SAVED TO DIRECTORY OF CHOICE AS TEXT FILE, TAB SEPARATED
-result.to_csv('C:/Users/jovan/Downloads/Predict/Result.txt', sep='\t', index=False)
-#====================================================================================
+result.to_csv('.../Prediction.txt', sep='\t', index=False)
+#========================================================================================
 
 
 
