@@ -50,10 +50,10 @@ result = pd.DataFrame(x)  # ORIGINAL DATA TO BE RECORDED IN RESULT, NOT TRANSFOR
 
 result.columns = ['s12', 's23', 's34', 's45', 's15', 's5']  # COLUMNS
 
-result['Predicted Amplitude'] = y                           # AMPLITUDE COLUMN
+result['M^2'] = y                                           # PREDICTED AMPLITUDE COLUMN
 
-# RESULT SAVED TO DIRECTORY OF CHOICE AS TEXT FILE, TAB SEPARATED
-result.to_csv('.../Prediction.txt', sep='\t', index=False)
+# RESULT SAVED TO DIRECTORY OF CHOICE AS TEXT FILE
+result.to_excel('.../Prediction.xlsx', index=False)
 #========================================================================================
 
 
