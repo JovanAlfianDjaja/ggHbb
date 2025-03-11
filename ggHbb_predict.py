@@ -10,14 +10,13 @@ import numpy as np
 from sklearn.preprocessing import QuantileTransformer
 #==================================================================================
 
-# LOAD .txt FILE WITH MANDELSTAM INVARIANTS AS PREDICTORS =========================
+# LOAD FILE WITH MANDELSTAM INVARIANTS AS PREDICTORS ==============================
 # MAKE SURE :
 # COLUMN 1 = s12, COLUMN 2 = s23
 # COLUMN 3 = s34, COLUMN 4 = s45
 # COLUMN 5 = s15, COLUMN 6 = s5
 
-# .txt FILE DIRECTORY TO LOAD DATA POINTS TO BE PREDICTED 
-# file_path = directory of .txt file
+# FILE DIRECTORY (file_path = [directory of file])
 file_path = ...
 
 # LOAD DATA
@@ -25,6 +24,7 @@ data = np.loadtxt(file_path)
 #==================================================================================
 
 # DATA PREPROCESSING ==============================================================
+
 # NUMBER OF FEATURES
 num_features = data.shape[1]
 
@@ -32,29 +32,25 @@ num_features = data.shape[1]
 x = data[:, :num_features]
 
 # DATA POINTS TRANSFORMATION
-pt = QuantileTransformer(output_distribution='uniform')
-pt = pt.fit(x)
-x_tr = pt.fit_transform(x)  # TRANSFORMED DATA
+x_tr = data[:, :num_features]/1000000  # TRANSFORMED DATA
 #==================================================================================
 
 # PREDICTION PROCESS ==============================================================
-# LOAD MODEL (LOAD model.keras FILE FROM DIRECTORY OF CHOICE)
+
+# LOAD MODEL
 model = keras.models.load_model('.../model.keras')
 
 # AMPLITUDE PREDICTION
-y = model.predict(x_tr)[:,0]  # PREDICT USING TRANSFORMED INVARIANTS
+y = model.predict(x_tr)[:,0]
 #==================================================================================
 
-# RESULT ================================================================================
-result = pd.DataFrame(x)  # ORIGINAL DATA TO BE RECORDED IN RESULT, NOT TRANSFORMED DATA
+# RESULT ============================================================================
+result = pd.DataFrame(x)
 
-result.columns = ['s12', 's23', 's34', 's45', 's15', 's5']  # COLUMNS
+result.columns = ['s12', 's23', 's34', 's45', 's15', 's5']
 
-result['M^2'] = y                                           # PREDICTED AMPLITUDE COLUMN
+result['M^2'] = np.exp(y)
 
-# RESULT SAVED TO DIRECTORY OF CHOICE AS TEXT FILE
-result.to_excel('.../Prediction.xlsx', index=False)
-#========================================================================================
-
-
-
+# RESULT SAVED TO DIRECTORY OF CHOICE AS EXCEL FILE
+result.to_excel('..../Result.xlsx', index=False)
+#====================================================================================
